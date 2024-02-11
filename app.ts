@@ -3,6 +3,7 @@ import expressLayouts from "express-ejs-layouts";
 import session from "express-session";
 import path from "path";
 import passportMiddleware from './middleware/passportMiddleware';
+import { sessionMiddleware } from "./middleware/getSessionData";
 import dotenv from 'dotenv'; 
 dotenv.config();
 
@@ -34,16 +35,9 @@ app.use(expressLayouts);
 app.use(express.urlencoded({ extended: true }));
 passportMiddleware(app);
 
+app.use(sessionMiddleware);
+
 app.use((req, res, next) => {
-  // if(req.sessionStore.all === undefined) {
-  //   throw new Error ("session is undefined");
-  // } req.sessionStore.all((err, sessions) => {
-  //   if(err) {
-  //   return next()
-  //   }
-  //    console.log(`Current Active Sessions: `);
-  //   console.log(sessions);
-  // })
   console.log(`User details are: `);
   console.log(req.user);
 

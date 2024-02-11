@@ -1,3 +1,13 @@
 <h1 class="mt-4">Dashboard</h1>
 <p class="lead mb-3">Welcome <%= user.name %></p>
-<a href="/auth/logout">Revoke sessions</a>
+<p>Current Active Sessions: 
+</p>
+<p><% sessionData.forEach(sessionData => { %>
+    <% const sid = sessionData.sessionID %>
+    <% const userID = sessionData.userID %> 
+    SessionID: <%= sid %></p>
+<p>UserID: <%= userID %> </p>
+<% }) %>
+<form action="/admin" method="POST">
+<button type="submit">Revoke sessions</button>
+</form>
