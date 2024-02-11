@@ -10,6 +10,7 @@ declare global {
       id: number;
       name: string;
       password: string;
+      role: string;
     }
   }
 }
@@ -20,21 +21,25 @@ const localStrategy = new LocalStrategy(
     passwordField: "password",
   },
   (email, password, done) => {
+  try {
     const user = getUserByEmailIdAndPassword(email, password);
-    return user
-      ? done(null, user)
-      : done(null, false, {
-          message: "Your login details are not valid. Please try again",
+      done(null, user!)
+  } catch (error: any) {
+      done(null, false, {
+          message: error.message,
         });
+    }
   }
 );
 
+type DoneFnForSerializeUser = (err: any, id: number) => void;
+type DoneFnForDeserializeUser = (err: any, user?: Express.User | false | null) => void;
 
-passport.serializeUser(function (user: Express.User, done: (err: any, id: number) => void)  {
+passport.serializeUser(function (user: Express.User, done: DoneFnForSerializeUser)  {
   done(null, user.id);
 });
 
-passport.deserializeUser(function (id: number, done: (err: any, user?: Express.User | false | null) => void) {
+passport.deserializeUser(function (id: number, done: DoneFnForDeserializeUser) {
   let user = getUserById(id);
   if (user) {
     done(null, user);

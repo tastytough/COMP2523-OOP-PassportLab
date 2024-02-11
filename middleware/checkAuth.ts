@@ -8,8 +8,20 @@ export const ensureAuthenticated = (req: Request, res: Response, next: NextFunct
 }
 
 export const forwardAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.isAuthenticated()) {
-      return next();
+    if (req.isAuthenticated()) {
+      if(req.user.role === "admin") {
+        return res.redirect("/admin");
+      } else {
+        return res.redirect("/dashboard");
+      }
+    } else {
+      next();
     }
-    res.redirect("/dashboard");
+  }
+
+export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if (req.isAuthenticated() && req.user.role === "admin") {
+    return next();
+  }
+  res.redirect("/dashboard");
 }
