@@ -12,6 +12,8 @@ const port = process.env.port || 8000;
 const app = express();
 
 app.set("view engine", "ejs");
+// app.use(sessionMiddleware);
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
   session({
@@ -35,7 +37,6 @@ app.use(expressLayouts);
 app.use(express.urlencoded({ extended: true }));
 passportMiddleware(app);
 
-app.use(sessionMiddleware);
 
 app.use((req, res, next) => {
   console.log(`User details are: `);

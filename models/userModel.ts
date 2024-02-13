@@ -32,6 +32,14 @@ const userModel = {
     throw new Error(`Couldn't find user with email: ${email}`);
   },
 
+  findPassword: (password: string) => {
+    const user = database.find((user) => user.password === password);
+    if (user) {
+      return user;
+    }
+    throw new Error("Password is incorrect");
+  },
+
   findById: (id: number) => {
     const user = database.find((user) => user.id === id);
     if (user) {
