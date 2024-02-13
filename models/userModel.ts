@@ -32,14 +32,6 @@ const userModel = {
     throw new Error(`Couldn't find user with email: ${email}`);
   },
 
-  findPassword: (password: string) => {
-    const user = database.find((user) => user.password === password);
-    if (user) {
-      return user;
-    }
-    throw new Error("Password is incorrect");
-  },
-
   findById: (id: number) => {
     const user = database.find((user) => user.id === id);
     if (user) {
@@ -65,20 +57,5 @@ const userModel = {
 
   }
 }
-  // findOrCreate: (id: number, name: string, email: string, password: string, role: string) => {
-  //   const user = database.find((user) => user.id === id );
-  //   if(!user) {
-  //   const newUser = {
-  //       id,
-  //       name,
-  //       email, 
-  //       password,
-  //       role
-  //     };
-  //     database.push(newUser);
-  //     return newUser;
-  //   } 
-  //   throw new Error(`${user} exists`)
-
 
 export { database, userModel };
