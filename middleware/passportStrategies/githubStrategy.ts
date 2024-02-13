@@ -2,16 +2,14 @@ import { Strategy as GitHubStrategy } from 'passport-github2';
 import { PassportStrategy } from '../../interfaces/index';
 import { Request } from 'express';
 import { VerifyCallback } from 'passport-oauth2';
-import dotenv from 'dotenv'; 
 import passport from 'passport';
 import { createUser, getUserById } from '../../controllers/userController';
-dotenv.config();
 
 const githubStrategy: GitHubStrategy = new GitHubStrategy(
     {
-        clientID: "d0151ba8394e47efb485",
-        clientSecret: "de5aeb15b1e1167c830b82bd7715e96b38ab7ca9",
-        callbackURL: "http://localhost:8000/auth/github/callback",
+        clientID: process.env.GITHUB_CLIENT_ID || "",
+        clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
+        callbackURL: process.env.GIT_CALLBACK_URL || "",
         passReqToCallback: true,
     },
 

@@ -1,11 +1,11 @@
 import express from "express";
 import expressLayouts from "express-ejs-layouts";
+import dotenv from 'dotenv'; 
+dotenv.config();
 import session from "express-session";
 import path from "path";
 import passportMiddleware from './middleware/passportMiddleware';
 import { sessionMiddleware } from "./middleware/getSessionData";
-import dotenv from 'dotenv'; 
-dotenv.config();
 
 const port = process.env.port || 8000;
 

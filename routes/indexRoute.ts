@@ -22,25 +22,15 @@ router.get("/admin", isAdmin, sessionMiddleware, (req, res) => {
     });
   });
 
-router.post("/admin", isAdmin, (req, res, next) => {
-  if(req.sessionStore.all === undefined) {
-    console.log("It can't be undefined")
-} else {
-    req.sessionStore.all((err: any, sessions: any) => {
-        if (err) {
-            return next(err);
-        }
-        const sessionIds = Object.keys(sessions);
-            const destroySessionData = sessionIds.map(sessionId => {
-                req.sessionStore.destroy(sessionId, (error: any) => {
-                  if(error) {
-                    console.log(error)
-                  }
-                })
-            })
-    })
-  }
-  res.redirect("/auth/login")
+router.get("/destroy/:sid", (req, res) => {
+  const sid = req.params.sid;
+  req.sessionStore.destroy(sid, (error: any) => {
+    if(error) {
+      console.log(error)
+    } else {
+      res.redirect("/admin")
+    }
+  })
 })
 
 export default router;
